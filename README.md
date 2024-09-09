@@ -29,13 +29,18 @@ python3 -m main \
 ```
 ## Stage Ⅱ Fine-tuning
 Import the model weights pre-trained in the stage Ⅰ into：
-./
+
+
+./Stage Ⅱ/engine/clip/model.py (pretrained_path = ...)
+
+### Feature Extraction
 
 You can use [features.py](features.py) to pre-extract image and text features from a frozen CLIP model. 
 ```
 python features.py --dataset imagenet --train-shot 16 --seed 1 --clip-encoder ViT-B/32 --image-layer-idx 0 --text-augmentation hand_crafted --image-augmentation none --image-views 0
 ```
 
+### Few-shot Training
 To reproduce the experiments in main paper (with flipped view and hand-crafted template), you may run the bash script below to extract for all 11 datasets and 1 seeds.
 
 ```
@@ -55,6 +60,7 @@ To collect results of cross-modal linear probing, please run
 ```
 python eval.py --mode linear --modality cross_modal --classifier_init zeroshot --clip-encoder ViT-B/32 --text-augmentation hand_crafted --image-augmentation flip --image-views 1
 ```
+###  Distribution Shift
 To reproduce the distribution shift experiments in paper please run [domain_shift.py](domain_shift.py). All the argparse arguments follow that of [train.py](train.py):
 
 ```
